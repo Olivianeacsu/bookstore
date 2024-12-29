@@ -25,10 +25,10 @@ class BookControllerTest {
     @Test
     void testGetBookByIdEndpoint() {
         given()
-                .pathParam("id", 1L)
+                .pathParam("id", 1001L)
                 .when().get("/api/books/{id}")
                 .then()
-                .statusCode(HttpResponseCodes.SC_NOT_FOUND);
+                .statusCode(HttpResponseCodes.SC_OK);
     }
 
     @Disabled
@@ -48,7 +48,7 @@ class BookControllerTest {
     @Test
     void testDeleteBookByIdEndpoint() {
         given()
-                .pathParam("id", 1L)
+                .pathParam("id", 1001L)
                 .when().delete("/api/books/{id}")
                 .then()
                 .statusCode(HttpResponseCodes.SC_NO_CONTENT);
