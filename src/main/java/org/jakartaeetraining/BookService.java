@@ -1,5 +1,6 @@
-package org.olivianeacsu;
+package org.jakartaeetraining;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -8,9 +9,13 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 
+@ApplicationScoped
 public class BookService {
     @Inject
     EntityManager em;
+
+    @Inject
+    IsbnGenerator isbnGenerator;
 
     @Transactional(Transactional.TxType.SUPPORTS)
     // SUPPORTS allows this to inherit transactional type from the caller of this method
@@ -27,6 +32,7 @@ public class BookService {
 
     @Transactional(Transactional.TxType.REQUIRED)
     public Book create(Book book) {
+        book.setIsbn(isbnGenerator.generateNumber());
         em.persist(book);
         return book;
     }
@@ -34,5 +40,10 @@ public class BookService {
     @Transactional(Transactional.TxType.REQUIRED)
     public void delete(Long id) {
         em.remove(em.getReference(Book.class, id));
+    }
+
+    public Long countAll() {
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(b) FROM Book b", Long.class);
+        return query.getSingleResult();
     }
 }

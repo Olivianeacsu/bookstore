@@ -1,4 +1,4 @@
-package org.olivianeacsu;
+package org.jakartaeetraining;
 
 import jakarta.persistence.*;
 

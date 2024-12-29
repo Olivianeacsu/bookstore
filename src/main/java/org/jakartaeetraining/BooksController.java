@@ -1,24 +1,31 @@
-package org.olivianeacsu;
+package org.jakartaeetraining;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
 @Path("/api/books")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class BooksController {
 
+    @Inject
+    UriInfo uriInfo;
+
+    @Inject
+    BookService bookService;
+
     @GET
     public Response getBooks() {
-        List<Book> books = new ArrayList<>();
-        //TODO:: get all books from DB
+        List<Book> books = bookService.findAll();
 
         if(books.isEmpty()) {
             return Response.noContent().build();
@@ -30,7 +37,7 @@ public class BooksController {
     @GET
     @Path("/{id}")
     public Response getBookById(@PathParam("id") Long id) {
-        Book book = null; //TODO:: get the book from DB
+        Book book = bookService.findById(id);
 
         if(book == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -41,15 +48,27 @@ public class BooksController {
 
     @POST
     public Response createBook(Book book) throws URISyntaxException {
-        //book.setId(1L);
-        URI createdURI = new URI(book.getId().toString());
+        bookService.create(book);
+        URI createdURI = uriInfo.getAbsolutePathBuilder()
+                .path(Long.toString(book.getId())).build();
         return Response.created(createdURI).entity(book).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteBook(@PathParam("id") Long id) {
-        //TODO:: delete book from DB
+        bookService.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/count")
+    @Produces(TEXT_PLAIN)
+    public Response countBooks() {
+        Long nbOfBooks = bookService.countAll();
+        if (nbOfBooks == 0)
+            return Response.noContent().build();
+
+        return Response.ok(nbOfBooks).build();
     }
 }

@@ -1,4 +1,4 @@
-package org.olivianeacsu;
+package org.jakartaeetraining;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -6,9 +6,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.spi.HttpResponseCodes;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +19,7 @@ class BookControllerTest {
         given()
           .when().get("/api/books")
           .then()
-             .statusCode(HttpResponseCodes.SC_NO_CONTENT);
+             .statusCode(HttpResponseCodes.SC_OK);
     }
 
     @Test
@@ -53,6 +52,16 @@ class BookControllerTest {
                 .when().delete("/api/books/{id}")
                 .then()
                 .statusCode(HttpResponseCodes.SC_NO_CONTENT);
+    }
+
+    @Test
+    public void testGetNumberOfBooks() {
+        given()
+                .header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN).
+                when()
+                .get("/api/books/count").
+                then()
+                .statusCode(Response.Status.OK.getStatusCode());
     }
 
 }
