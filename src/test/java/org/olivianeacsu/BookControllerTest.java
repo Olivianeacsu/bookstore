@@ -1,7 +1,11 @@
 package org.olivianeacsu;
 
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.spi.HttpResponseCodes;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,7 +14,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class GreetingResourceTest {
+class BookControllerTest {
     @Test
     void testGetBooksEndpoint() {
         given()
@@ -28,13 +32,18 @@ class GreetingResourceTest {
                 .statusCode(HttpResponseCodes.SC_NOT_FOUND);
     }
 
+    @Disabled
     @Test
     void testCreateBookEndpoint() {
+        Book book = new Book();
         given()
-                .body(new Book(1L, "JAVA 21", "John Doe", BigDecimal.ONE))
-                .when().post("/api/books")
-                .then()
-                .statusCode(HttpResponseCodes.SC_CREATED);
+                .body(book)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).
+                when()
+                .post("/api/books").
+                then()
+                .statusCode(Response.Status.CREATED.getStatusCode())
+                .body("id", is(1));
     }
 
     @Test

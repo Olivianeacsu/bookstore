@@ -13,7 +13,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("/api/books")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public class BooksResource {
+public class BooksController {
 
     @GET
     public Response getBooks() {

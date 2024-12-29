@@ -3,28 +3,29 @@ package org.olivianeacsu;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "T_BOOK")
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-
-    @Column(length = 255)
+    @Column(length = 50)
+    private String isbn;
+    @Column(length = 200)
     private String title;
-    @Column(length = 100)
-    private String author;
+    @Column(length = 10000)
+    private String description;
     private BigDecimal price;
+    @Column(name = "publication_date")
+    private LocalDate publicationDate;
+    @Column(name = "nb_of_pages")
+    private Integer nbOfPages;
+    @Column(name = "image_url")
+    private String imageURL;
 
-    public Book(Long id, String title, String author, BigDecimal price) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.price = price;
-    }
-
-    public Book() {
-    }
 
     public Long getId() {
         return id;
@@ -32,6 +33,14 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitle() {
@@ -42,12 +51,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {
@@ -56,5 +65,29 @@ public class Book {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDate publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public Integer getNbOfPages() {
+        return nbOfPages;
+    }
+
+    public void setNbOfPages(Integer nbOfPages) {
+        this.nbOfPages = nbOfPages;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
