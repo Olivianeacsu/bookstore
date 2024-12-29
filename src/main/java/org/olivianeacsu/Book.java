@@ -16,6 +16,16 @@ public class Book {
     private String author;
     private BigDecimal price;
 
+    public Book(Long id, String title, String author, BigDecimal price) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+
+    public Book() {
+    }
+
     public Long getId() {
         return id;
     }

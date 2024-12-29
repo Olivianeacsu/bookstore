@@ -41,7 +41,7 @@ public class BooksResource {
 
     @POST
     public Response createBook(Book book) throws URISyntaxException {
-        book.setId(1L);
+        //book.setId(1L);
         URI createdURI = new URI(book.getId().toString());
         return Response.created(createdURI).entity(book).build();
     }
