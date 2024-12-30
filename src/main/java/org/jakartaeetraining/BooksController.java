@@ -1,6 +1,7 @@
 package org.jakartaeetraining;
 
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.Min;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -36,7 +37,7 @@ public class BooksController {
 
     @GET
     @Path("/{id}")
-    public Response getBookById(@PathParam("id") Long id) {
+    public Response getBookById(@PathParam("id") @Min(1) Long id) {
         Book book = bookService.findById(id);
 
         if(book == null) {
@@ -56,7 +57,7 @@ public class BooksController {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteBook(@PathParam("id") Long id) {
+    public Response deleteBook(@PathParam("id") @Min(1) Long id) {
         bookService.delete(id);
         return Response.noContent().build();
     }

@@ -1,6 +1,10 @@
 package org.jakartaeetraining;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,17 +16,29 @@ public class Book {
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(length = 50)
     private String isbn;
+
     @Column(length = 200)
+    @NotNull
     private String title;
+
     @Column(length = 10000)
+    @Size(min = 10, max = 10000)
     private String description;
+
+    @Min(1)
     private BigDecimal price;
+
     @Column(name = "publication_date")
+    @Past
     private LocalDate publicationDate;
+
     @Column(name = "nb_of_pages")
+    @Min(10)
     private Integer nbOfPages;
+
     @Column(name = "image_url")
     private String imageURL;
 
