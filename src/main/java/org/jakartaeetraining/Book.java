@@ -1,16 +1,21 @@
 package org.jakartaeetraining;
 
+import jakarta.json.bind.annotation.JsonbNumberFormat;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "T_BOOK")
+@Schema(name= "Book", description = "POJO that represents a book")
 public class Book {
 
     @Id
@@ -29,17 +34,21 @@ public class Book {
     private String description;
 
     @Min(1)
+    @JsonbNumberFormat(locale = "en_US", value="$#0.00")
     private BigDecimal price;
 
     @Column(name = "publication_date")
+    @JsonbProperty("publication-date")
     @Past
     private LocalDate publicationDate;
 
     @Column(name = "nb_of_pages")
+    @JsonbProperty("nb-of-pages")
     @Min(10)
     private Integer nbOfPages;
 
     @Column(name = "image_url")
+    @JsonbTransient
     private String imageURL;
 
 
