@@ -2,6 +2,7 @@ package org.jakartaeetraining;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import java.util.List;
 
 
 @ApplicationScoped
+@Named
 public class BookService {
     @Inject
     EntityManager em;

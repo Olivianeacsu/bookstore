@@ -48,7 +48,7 @@ public class Book {
     private Integer nbOfPages;
 
     @Column(name = "image_url")
-    @JsonbTransient
+    //@JsonbTransient
     private String imageURL;
 
 
